@@ -1,0 +1,12 @@
+# Configs / secrets
+config.php
+config*.php
+.env
+
+# Logs / runtime
+error_log
+*.log
+
+# Uploads / media (ajuste se quiser versionar)
+uploads/
+
