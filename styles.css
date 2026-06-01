@@ -911,6 +911,7 @@ header h1 span {
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-wrap: wrap;
 }
 
 .menu-topo a {
@@ -926,6 +927,38 @@ header h1 span {
 .menu-topo a:hover {
     background: rgba(29,185,84,0.15);
     color: var(--verde);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.install-app-btn {
+    appearance: none;
+    border: 1px solid rgba(29, 185, 84, 0.4);
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.18), rgba(12, 58, 31, 0.92));
+    color: #f3fff8;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.install-app-btn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(71, 235, 132, 0.8);
+    box-shadow: 0 14px 28px rgba(4, 17, 9, 0.38);
+}
+
+.install-app-btn[hidden] {
+    display: none !important;
 }
 
 /* =========================
@@ -975,6 +1008,11 @@ header h1 span {
     .menu-topo a {
         font-size: 13px;
         padding: 6px 8px;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
     }
 }
 

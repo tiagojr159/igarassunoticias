@@ -1,0 +1,24 @@
+{
+  "name": "Igarassu Notícias e Rádio Cueiras",
+  "short_name": "Igarassu Notícias",
+  "description": "Portal de notícias locais e rádio para acompanhar Igarassu e região no celular.",
+  "start_url": "/igarassunoticias/index.php",
+  "scope": "/igarassunoticias/",
+  "display": "standalone",
+  "background_color": "#020f08",
+  "theme_color": "#0f7a43",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/igarassunoticias/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/igarassunoticias/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

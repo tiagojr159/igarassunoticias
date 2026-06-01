@@ -39,6 +39,7 @@ Estrutura fixa do JSON:
   "noticias": [
     {
       "titulo": "",
+      "texto": "",
       "resumo": "",
       "fonte": "",
       "data_publicacao": "",
@@ -88,6 +89,7 @@ require_once 'conexao.php'; // deve criar $conn (mysqli)
 $SENHA_FIXA = '1234'; // 🔐 senha mocada
 $mensagem = "";
 $falhas = [];
+$duplicadas = 0;
 
 // ===============================
 // SLUG
@@ -149,11 +151,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             foreach ($dados['noticias'] as $i => $n) {
 
                 $titulo = trim($n['titulo'] ?? '');
+                $textoCompleto = trim($n['texto'] ?? $n['corpo'] ?? $n['conteudo'] ?? $n['conteúdo'] ?? '');
                 $resumo = trim($n['resumo'] ?? '');
+                $texto = $textoCompleto !== '' ? $textoCompleto : $resumo;
 
-                if ($titulo === '' || $resumo === '') {
+                if ($titulo === '' || $texto === '') {
                     $erro++;
-                    $falhas[] = "Item ".($i+1).": título ou resumo vazio";
+                    $falhas[] = "Item ".($i+1).": título ou texto vazio";
                     continue;
                 }
 
@@ -176,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $f[]='slug'; $p[]='?'; $t.='s'; $v[]=$slug;
                 }
                 if (in_array('texto', $colunas)) {
-                    $f[]='texto'; $p[]='?'; $t.='s'; $v[]=$resumo;
+                    $f[]='texto'; $p[]='?'; $t.='s'; $v[]=$texto;
                 }
                 if (in_array('fonte', $colunas)) {
                     $f[]='fonte'; $p[]='?'; $t.='s'; $v[]=$fonte;
@@ -228,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            $mensagem = "✅ Inseridas: $ok | ❌ Falharam: $erro";
+            $mensagem = "✅ Inseridas: $ok | 🔁 Duplicadas: $duplicadas | ❌ Falharam: $erro";
         }
     }
 }

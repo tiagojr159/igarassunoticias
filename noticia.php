@@ -101,7 +101,12 @@ $conn->close();
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($noticia['titulo']); ?> | Igarassu Notícias</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="theme-color" content="#0f7a43">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Igarassu Notícias">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="logo.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -111,7 +116,10 @@ $conn->close();
     <header>
         <div class="container header-flex">
             <h1>Igarassu Notícias e Rádio Cueiras</h1>
-            <span class="on-air">● AO VIVO</span>
+            <div class="header-actions">
+                <span class="on-air">● AO VIVO</span>
+                <button id="installAppButton" class="install-app-btn" type="button" hidden>Instalar app</button>
+            </div>
         </div>
     </header>
 
@@ -385,6 +393,50 @@ $conn->close();
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let deferredInstallPrompt = null;
+        const isMobileDevice = /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("service-worker.js").catch(() => {});
+            });
+        }
+
+        const installAppButton = document.getElementById("installAppButton");
+
+        window.addEventListener("beforeinstallprompt", (event) => {
+            event.preventDefault();
+            if (!isMobileDevice) {
+                return;
+            }
+            deferredInstallPrompt = event;
+            if (installAppButton) {
+                installAppButton.hidden = false;
+            }
+        });
+
+        if (installAppButton) {
+            installAppButton.addEventListener("click", async () => {
+                if (deferredInstallPrompt) {
+                    deferredInstallPrompt.prompt();
+                    await deferredInstallPrompt.userChoice;
+                    deferredInstallPrompt = null;
+                    installAppButton.hidden = true;
+                    return;
+                }
+
+                alert("Se o botão automático não aparecer, abra o menu do navegador e toque em 'Instalar app' ou 'Adicionar à tela inicial'.");
+            });
+        }
+
+        window.addEventListener("appinstalled", () => {
+            deferredInstallPrompt = null;
+            if (installAppButton) {
+                installAppButton.hidden = true;
+            }
+        });
+    </script>
 
 </body>
 
