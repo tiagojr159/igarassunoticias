@@ -1,10 +1,11 @@
-const CACHE_NAME = "igarassu-noticias-v1";
+const CACHE_NAME = "igarassu-noticias-v3";
 const APP_SHELL = [
   "/igarassunoticias/",
   "/igarassunoticias/index.php",
-  "/igarassunoticias/noticia.php",
   "/igarassunoticias/styles.css",
   "/igarassunoticias/logo.png",
+  "/igarassunoticias/icons/icon-192.png",
+  "/igarassunoticias/icons/icon-512.png",
   "/igarassunoticias/tiago.png",
   "/igarassunoticias/anunie.png",
   "/igarassunoticias/manifest.webmanifest"

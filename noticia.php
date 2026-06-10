@@ -406,8 +406,9 @@ $conn->close();
         const isMobileDevice = /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent));
         const isIosDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent));
         const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+        const isSecurePwaContext = window.isSecureContext || ["localhost", "127.0.0.1"].includes(window.location.hostname);
 
-        if ("serviceWorker" in navigator) {
+        if ("serviceWorker" in navigator && isSecurePwaContext) {
             window.addEventListener("load", () => {
                 navigator.serviceWorker.register("/igarassunoticias/service-worker.js", {
                     scope: "/igarassunoticias/"
@@ -437,6 +438,10 @@ $conn->close();
             if (pwaInstallText && isIosDevice) {
                 pwaInstallText.textContent = "No iPhone, toque em Compartilhar e depois em Adicionar a Tela de Inicio.";
             }
+
+            if (pwaInstallText && !isSecurePwaContext) {
+                pwaInstallText.textContent = "Para liberar a instalacao automatica, acesse o site por HTTPS.";
+            }
         };
 
         const hideInstallControls = () => {
@@ -459,7 +464,9 @@ $conn->close();
 
             alert(isIosDevice
                 ? "Para instalar no iPhone: toque no botao Compartilhar do Safari e escolha 'Adicionar a Tela de Inicio'."
-                : "Abra o menu do navegador e toque em 'Instalar app' ou 'Adicionar a tela inicial'.");
+                : (isSecurePwaContext
+                    ? "Abra o menu do navegador e toque em 'Instalar app' ou 'Adicionar a tela inicial'."
+                    : "No celular, o Chrome so libera instalacao PWA quando o site abre em HTTPS."));
         };
 
         window.addEventListener("beforeinstallprompt", (event) => {
