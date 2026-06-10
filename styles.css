@@ -961,6 +961,59 @@ header h1 span {
     display: none !important;
 }
 
+.install-app-btn.is-mobile-cta {
+    border-color: rgba(71, 235, 132, 0.85);
+    background: linear-gradient(135deg, #27d76b, #0f7a43);
+    color: #02140a;
+    box-shadow: 0 10px 24px rgba(20, 160, 80, 0.35);
+}
+
+.pwa-install-tip {
+    position: fixed;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    z-index: 1500;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid rgba(71, 235, 132, 0.65);
+    border-radius: 16px;
+    background: rgba(2, 15, 8, 0.96);
+    color: #f3fff8;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.38);
+}
+
+.pwa-install-tip.is-visible {
+    display: flex;
+}
+
+.pwa-install-tip strong {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+
+.pwa-install-tip span {
+    display: block;
+    font-size: 12px;
+    line-height: 1.35;
+    color: rgba(243, 255, 248, 0.78);
+}
+
+.pwa-install-tip button {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 12px;
+    background: #27d76b;
+    color: #02140a;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
 /* =========================
    AO VIVO
 ========================= */
@@ -1013,6 +1066,11 @@ header h1 span {
     .header-actions {
         width: 100%;
         justify-content: space-between;
+    }
+
+    .install-app-btn.is-mobile-cta {
+        flex: 1;
+        padding: 10px 14px;
     }
 }
 

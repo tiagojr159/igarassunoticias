@@ -393,17 +393,74 @@ $conn->close();
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <div id="pwaInstallTip" class="pwa-install-tip" role="status" aria-live="polite">
+        <div>
+            <strong>Instale o app no celular</strong>
+            <span id="pwaInstallText">Toque em instalar para abrir o site como aplicativo.</span>
+        </div>
+        <button id="pwaInstallTipButton" type="button">Instalar</button>
+    </div>
+
     <script>
         let deferredInstallPrompt = null;
-        const isMobileDevice = /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const isMobileDevice = /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent));
+        const isIosDevice = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent));
+        const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
 
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", () => {
-                navigator.serviceWorker.register("service-worker.js").catch(() => {});
+                navigator.serviceWorker.register("/igarassunoticias/service-worker.js", {
+                    scope: "/igarassunoticias/"
+                }).catch(() => {});
             });
         }
 
         const installAppButton = document.getElementById("installAppButton");
+        const pwaInstallTip = document.getElementById("pwaInstallTip");
+        const pwaInstallText = document.getElementById("pwaInstallText");
+        const pwaInstallTipButton = document.getElementById("pwaInstallTipButton");
+
+        const showInstallControls = () => {
+            if (!isMobileDevice || isStandalone) {
+                return;
+            }
+
+            if (installAppButton) {
+                installAppButton.hidden = false;
+                installAppButton.classList.add("is-mobile-cta");
+            }
+
+            if (pwaInstallTip) {
+                pwaInstallTip.classList.add("is-visible");
+            }
+
+            if (pwaInstallText && isIosDevice) {
+                pwaInstallText.textContent = "No iPhone, toque em Compartilhar e depois em Adicionar a Tela de Inicio.";
+            }
+        };
+
+        const hideInstallControls = () => {
+            if (installAppButton) {
+                installAppButton.hidden = true;
+            }
+            if (pwaInstallTip) {
+                pwaInstallTip.classList.remove("is-visible");
+            }
+        };
+
+        const runInstallFlow = async () => {
+            if (deferredInstallPrompt) {
+                deferredInstallPrompt.prompt();
+                await deferredInstallPrompt.userChoice;
+                deferredInstallPrompt = null;
+                hideInstallControls();
+                return;
+            }
+
+            alert(isIosDevice
+                ? "Para instalar no iPhone: toque no botao Compartilhar do Safari e escolha 'Adicionar a Tela de Inicio'."
+                : "Abra o menu do navegador e toque em 'Instalar app' ou 'Adicionar a tela inicial'.");
+        };
 
         window.addEventListener("beforeinstallprompt", (event) => {
             event.preventDefault();
@@ -411,10 +468,19 @@ $conn->close();
                 return;
             }
             deferredInstallPrompt = event;
-            if (installAppButton) {
-                installAppButton.hidden = false;
-            }
+            showInstallControls();
         });
+
+        if (installAppButton) {
+            installAppButton.addEventListener("click", (event) => {
+                event.stopImmediatePropagation();
+                runInstallFlow();
+            }, true);
+        }
+
+        if (pwaInstallTipButton) {
+            pwaInstallTipButton.addEventListener("click", runInstallFlow);
+        }
 
         if (installAppButton) {
             installAppButton.addEventListener("click", async () => {
@@ -435,6 +501,11 @@ $conn->close();
             if (installAppButton) {
                 installAppButton.hidden = true;
             }
+            hideInstallControls();
+        });
+
+        window.addEventListener("load", () => {
+            window.setTimeout(showInstallControls, 1200);
         });
     </script>
 

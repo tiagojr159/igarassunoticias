@@ -2,7 +2,7 @@
 config.php
 config*.php
 .env
-
+ultima_execucao_google.txt
 # Logs / runtime
 error_log
 *.log

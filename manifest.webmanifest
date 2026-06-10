@@ -1,24 +1,43 @@
 {
-  "name": "Igarassu Notícias e Rádio Cueiras",
-  "short_name": "Igarassu Notícias",
-  "description": "Portal de notícias locais e rádio para acompanhar Igarassu e região no celular.",
-  "start_url": "/igarassunoticias/index.php",
+  "id": "/igarassunoticias/",
+  "name": "Igarassu Not\u00edcias e R\u00e1dio Cueiras",
+  "short_name": "Igarassu",
+  "description": "Portal de not\u00edcias locais e r\u00e1dio para acompanhar Igarassu e regi\u00e3o no celular.",
+  "start_url": "/igarassunoticias/index.php?source=pwa",
   "scope": "/igarassunoticias/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#020f08",
   "theme_color": "#0f7a43",
   "lang": "pt-BR",
+  "orientation": "portrait-primary",
+  "categories": ["news", "music", "entertainment"],
   "icons": [
     {
       "src": "/igarassunoticias/logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/igarassunoticias/logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "\u00daltimas not\u00edcias",
+      "short_name": "Not\u00edcias",
+      "url": "/igarassunoticias/index.php?source=pwa",
+      "icons": [
+        {
+          "src": "/igarassunoticias/logo.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
