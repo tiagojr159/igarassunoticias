@@ -422,7 +422,7 @@ $conn->close();
         const pwaInstallTipButton = document.getElementById("pwaInstallTipButton");
 
         const showInstallControls = () => {
-            if (!isMobileDevice || isStandalone) {
+            if (isStandalone) {
                 return;
             }
 
@@ -466,9 +466,6 @@ $conn->close();
 
         window.addEventListener("beforeinstallprompt", (event) => {
             event.preventDefault();
-            if (!isMobileDevice) {
-                return;
-            }
             deferredInstallPrompt = event;
             showInstallControls();
         });

@@ -970,8 +970,8 @@ header h1 span {
 
 .pwa-install-tip {
     position: fixed;
+    top: 14px;
     right: 16px;
-    bottom: 18px;
     z-index: 1500;
     display: none;
     align-items: center;
@@ -1018,7 +1018,7 @@ header h1 span {
 @keyframes pwaFloatIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(-10px);
     }
 
     to {
@@ -1088,7 +1088,7 @@ header h1 span {
 
     .pwa-install-tip {
         right: 12px;
-        bottom: 12px;
+        top: 12px;
         width: calc(100vw - 24px);
     }
 }
