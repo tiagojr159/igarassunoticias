@@ -426,11 +426,6 @@ $conn->close();
                 return;
             }
 
-            if (installAppButton) {
-                installAppButton.hidden = false;
-                installAppButton.classList.add("is-mobile-cta");
-            }
-
             if (pwaInstallTip) {
                 pwaInstallTip.classList.add("is-visible");
             }
@@ -488,6 +483,18 @@ $conn->close();
         if (pwaInstallTipButton) {
             pwaInstallTipButton.addEventListener("click", runInstallFlow);
         }
+
+        document.addEventListener("pointerdown", (event) => {
+            if (!pwaInstallTip || !pwaInstallTip.classList.contains("is-visible")) {
+                return;
+            }
+
+            if (pwaInstallTip.contains(event.target)) {
+                return;
+            }
+
+            hideInstallControls();
+        });
 
         if (installAppButton) {
             installAppButton.addEventListener("click", async () => {

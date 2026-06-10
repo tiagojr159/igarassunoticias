@@ -970,15 +970,15 @@ header h1 span {
 
 .pwa-install-tip {
     position: fixed;
-    left: 14px;
-    right: 14px;
-    bottom: 14px;
+    right: 16px;
+    bottom: 18px;
     z-index: 1500;
     display: none;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     padding: 12px 14px;
+    width: min(360px, calc(100vw - 32px));
     border: 1px solid rgba(71, 235, 132, 0.65);
     border-radius: 16px;
     background: rgba(2, 15, 8, 0.96);
@@ -988,6 +988,7 @@ header h1 span {
 
 .pwa-install-tip.is-visible {
     display: flex;
+    animation: pwaFloatIn .22s ease-out;
 }
 
 .pwa-install-tip strong {
@@ -1012,6 +1013,18 @@ header h1 span {
     color: #02140a;
     font-weight: 800;
     white-space: nowrap;
+}
+
+@keyframes pwaFloatIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* =========================
@@ -1071,6 +1084,12 @@ header h1 span {
     .install-app-btn.is-mobile-cta {
         flex: 1;
         padding: 10px 14px;
+    }
+
+    .pwa-install-tip {
+        right: 12px;
+        bottom: 12px;
+        width: calc(100vw - 24px);
     }
 }
 

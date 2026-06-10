@@ -1,4 +1,4 @@
-const CACHE_NAME = "igarassu-noticias-v3";
+const CACHE_NAME = "igarassu-noticias-v4";
 const APP_SHELL = [
   "/igarassunoticias/",
   "/igarassunoticias/index.php",
